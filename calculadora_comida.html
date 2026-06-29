@@ -1,0 +1,429 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Calculadora de Cuenta - Puesto de Comida</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            min-height: 100vh;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            padding: 20px;
+        }
+
+        .container {
+            background: white;
+            border-radius: 15px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            max-width: 500px;
+            width: 100%;
+            padding: 30px;
+        }
+
+        h1 {
+            text-align: center;
+            color: #333;
+            margin-bottom: 30px;
+            font-size: 24px;
+        }
+
+        .menu-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #667eea;
+        }
+
+        .item-header {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .item-name {
+            font-weight: 600;
+            color: #333;
+            font-size: 16px;
+        }
+
+        .item-price {
+            color: #667eea;
+            font-weight: bold;
+            font-size: 16px;
+        }
+
+        .input-group {
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+
+        label {
+            color: #666;
+            font-size: 14px;
+            min-width: 80px;
+        }
+
+        input[type="number"],
+        select {
+            padding: 8px 10px;
+            border: 1px solid #ddd;
+            border-radius: 5px;
+            font-size: 14px;
+            width: 100px;
+        }
+
+        input[type="number"]:focus,
+        select:focus {
+            outline: none;
+            border-color: #667eea;
+            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+        }
+
+        .kilo-options {
+            margin-top: 10px;
+        }
+
+        .kilo-options label {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+            margin-bottom: 8px;
+            cursor: pointer;
+            color: #555;
+        }
+
+        input[type="radio"] {
+            cursor: pointer;
+        }
+
+        .checkbox-item {
+            background: #f8f9fa;
+            padding: 15px;
+            margin-bottom: 15px;
+            border-radius: 8px;
+            border-left: 4px solid #764ba2;
+            display: flex;
+            align-items: center;
+            gap: 15px;
+        }
+
+        input[type="checkbox"] {
+            cursor: pointer;
+            width: 20px;
+            height: 20px;
+        }
+
+        .checkbox-label {
+            font-weight: 600;
+            color: #333;
+            flex: 1;
+        }
+
+        .separator {
+            height: 2px;
+            background: linear-gradient(to right, #667eea, transparent);
+            margin: 25px 0;
+        }
+
+        .totales {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+            padding: 20px;
+            border-radius: 8px;
+            margin-bottom: 20px;
+        }
+
+        .total-row {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 10px;
+            font-size: 16px;
+        }
+
+        .total-row.final {
+            border-top: 2px solid rgba(255, 255, 255, 0.3);
+            padding-top: 10px;
+            font-size: 24px;
+            font-weight: bold;
+        }
+
+        .total-label {
+            opacity: 0.95;
+        }
+
+        .total-amount {
+            font-weight: 600;
+        }
+
+        .card-total {
+            text-align: right;
+            font-size: 13px;
+            font-weight: 300;
+            opacity: 0.7;
+        }
+
+        .buttons {
+            display: flex;
+            gap: 10px;
+        }
+
+        button {
+            flex: 1;
+            padding: 12px;
+            border: none;
+            border-radius: 8px;
+            font-size: 16px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+        }
+
+        .btn-calcular {
+            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            color: white;
+        }
+
+        .btn-calcular:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+        }
+
+        .btn-limpiar {
+            background: #e0e0e0;
+            color: #333;
+        }
+
+        .btn-limpiar:hover {
+            background: #d0d0d0;
+        }
+
+        .hidden {
+            display: none;
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <h1>🍽️ Calculadora de Cuenta</h1>
+
+        <!-- Tacos -->
+        <div class="menu-item">
+            <div class="item-header">
+                <span class="item-name">Tacos</span>
+            </div>
+            <div class="input-group">
+                <!--label for="tacos">Cantidad:</label -->
+                <input type="number" id="tacos" min="0" value="0" step="1">
+            </div>
+        </div>
+
+        <!-- Consomés -->
+        <div class="menu-item">
+            <div class="item-header">
+                <span class="item-name">Consomés</span>
+            </div>
+            <div class="kilo-options">
+                <label>
+                    <input type="number" id="consomeChico" min="0" value="0" step="1">
+                    Normal - $30
+                </label>
+                <label>
+                    <input type="number" id="consomeMedio" min="0" value="0" step="1">
+                    Medio - $20
+                </label>
+                <label>
+                    <input type="number" id="consomeLitro" min="0" value="0" step="1">
+                    Litro - $60
+                </label>
+            </div>
+        </div>
+
+        <!-- Tortillas -->
+        <div class="menu-item">
+            <div class="item-header">
+                <span class="item-name">Tortillas</span>
+            </div>
+            <div class="kilo-options">
+                <label>
+                    <input type="number" id="tortillaKilo" min="0" value="0" step="1">
+                    Kilo - $25
+                </label>
+                <label>
+                    <input type="number" id="tortillaMedio" min="0" value="0" step="1">
+                    Medio - $13
+                </label>
+                <label>
+                    <input type="number" id="tortillaPesos" min="0" value="0" step="1">
+                    Pesos
+                </label>
+            </div>
+        </div>
+
+        <!-- Pata -->
+        <div class="menu-item">
+            <div class="item-header">
+                <span class="item-name">Pata</span>
+            </div>
+            <div class="input-group">
+                <label for="pata">Cantidad:</label>
+                <input type="number" id="pata" min="0" value="0" step="1">
+            </div>
+        </div>
+
+        <!-- Refresco -->
+        <div class="menu-item">
+            <div class="item-header">
+                <span class="item-name">Refresco</span>
+            </div>
+            <div class="input-group">
+                <label for="refresco">Cantidad:</label>
+                <input type="number" id="refresco" min="0" value="0" step="1">
+            </div>
+        </div>
+
+        <!-- Kilo -->
+        <div class="menu-item">
+            <div class="item-header">
+                <span class="item-name">Kilo</span>
+            </div>
+            <div class="kilo-options">
+                <label>
+                    <input type="radio" name="kilo" value="0" checked> Sin Kilo
+                </label>
+                <label>
+                    <input type="radio" name="kilo" value="0.25"> 1/4 Kg - $170
+                </label>
+                <label>
+                    <input type="radio" name="kilo" value="0.5"> 1/2 Kg - $340
+                </label>
+                <label>
+                    <input type="radio" name="kilo" value="0.75"> 3/4 Kg - $510
+                </label>
+                <label>
+                    <input type="radio" name="kilo" value="1"> 1 Kg - $680
+                </label>
+            </div>
+        </div>
+
+        <!-- Para llevar -->
+        <div class="checkbox-item">
+            <input type="checkbox" id="paraLlevar">
+            <label for="paraLlevar" class="checkbox-label">Para Llevar (+$5)</label>
+        </div>
+
+        <div class="separator"></div>
+
+        <!-- Resumen -->
+        <div class="totales">
+            <div class="total-row final">
+                <span class="total-label">TOTAL:</span>
+                <span class="total-amount" id="total">$0.00</span>
+            </div>
+            <div class="card-total" id="totalTarjeta">0</div>
+        </div>
+
+        <!-- Botones -->
+        <div class="buttons">
+            <button class="btn-calcular" onclick="calcularCuenta()">Calcular Cuenta</button>
+            <button class="btn-limpiar" onclick="limpiar()">Limpiar</button>
+        </div>
+    </div>
+
+    <script>
+        function calcularCuenta() {
+            // Obtener valores
+            const tacos = parseInt(document.getElementById('tacos').value) || 0;
+            const pata = parseInt(document.getElementById('pata').value) || 0;
+            const refresco = parseInt(document.getElementById('refresco').value) || 0;
+            const consomeChico = parseInt(document.getElementById('consomeChico').value) || 0;
+            const consomeMedio = parseInt(document.getElementById('consomeMedio').value) || 0;
+            const consomeLitro = parseInt(document.getElementById('consomeLitro').value) || 0;
+            const tortillaKilo = parseInt(document.getElementById('tortillaKilo').value) || 0;
+            const tortillaMedio = parseInt(document.getElementById('tortillaMedio').value) || 0;
+            const tortillaPesos = parseFloat(document.getElementById('tortillaPesos').value) || 0;
+            const kiloRadio = document.querySelector('input[name="kilo"]:checked').value;
+            const kilo = parseFloat(kiloRadio);
+            const paraLlevar = document.getElementById('paraLlevar').checked;
+
+            // Calcular precios
+            const precio30 = 30;
+            const precioKiloBase = 680;
+
+            let totalTacos = tacos * precio30;
+            let totalConsome = (consomeChico * 30) + (consomeMedio * 20) + (consomeLitro * 60);
+            let totalTortillas = (tortillaKilo * 25) + (tortillaMedio * 13) + tortillaPesos;
+            let totalPata = pata * precio30;
+            let totalRefresco = refresco * precio30;
+            let totalKilo = kilo * precioKiloBase;
+
+            // Subtotal
+            let subtotal = totalTacos + totalConsome + totalTortillas + totalPata + totalRefresco + totalKilo;
+
+            // Para llevar
+            let costoPaLlevar = 0;
+            if (paraLlevar && subtotal > 0) {
+                costoPaLlevar = 5;
+            }
+
+            // Total
+            let total = subtotal + costoPaLlevar;
+            let totalTarjeta = Math.ceil(total * 1.03);
+
+            // Mostrar resultados
+            document.getElementById('total').textContent = formatearMoneda(total);
+            document.getElementById('totalTarjeta').textContent = totalTarjeta;
+        }
+
+        function formatearMoneda(cantidad) {
+            return '$' + cantidad.toLocaleString('es-MX', {
+                minimumFractionDigits: 2,
+                maximumFractionDigits: 2
+            });
+        }
+
+        function limpiar() {
+            document.getElementById('tacos').value = 0;
+            document.getElementById('pata').value = 0;
+            document.getElementById('refresco').value = 0;
+            document.getElementById('consomeChico').value = 0;
+            document.getElementById('consomeMedio').value = 0;
+            document.getElementById('consomeLitro').value = 0;
+            document.getElementById('tortillaKilo').value = 0;
+            document.getElementById('tortillaMedio').value = 0;
+            document.getElementById('tortillaPesos').value = 0;
+            document.querySelector('input[name="kilo"][value="0"]').checked = true;
+            document.getElementById('paraLlevar').checked = false;
+            document.getElementById('total').textContent = '$0.00';
+            document.getElementById('totalTarjeta').textContent = '0';
+        }
+
+        // Calcular automáticamente cuando cambien los valores
+        document.getElementById('tacos').addEventListener('change', calcularCuenta);
+        document.getElementById('pata').addEventListener('change', calcularCuenta);
+        document.getElementById('refresco').addEventListener('change', calcularCuenta);
+        document.getElementById('consomeChico').addEventListener('input', calcularCuenta);
+        document.getElementById('consomeMedio').addEventListener('input', calcularCuenta);
+        document.getElementById('consomeLitro').addEventListener('input', calcularCuenta);
+        document.getElementById('tortillaKilo').addEventListener('input', calcularCuenta);
+        document.getElementById('tortillaMedio').addEventListener('input', calcularCuenta);
+        document.getElementById('tortillaPesos').addEventListener('input', calcularCuenta);
+        document.querySelectorAll('input[name="kilo"]').forEach(radio => {
+            radio.addEventListener('change', calcularCuenta);
+        });
+        document.getElementById('paraLlevar').addEventListener('change', calcularCuenta);
+    </script>
+</body>
+</html>
