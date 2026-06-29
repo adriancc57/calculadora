@@ -105,6 +105,14 @@
             color: #555;
         }
 
+        .calculation-result {
+            color: #667eea;
+            font-size: 13px;
+            font-weight: 600;
+            min-width: 80px;
+            text-align: right;
+        }
+
         input[type="radio"] {
             cursor: pointer;
         }
@@ -294,26 +302,21 @@
             </div>
         </div>
 
-        <!-- Kilo -->
+        <!-- Pesado -->
         <div class="menu-item">
             <div class="item-header">
-                <span class="item-name">Kilo</span>
+                <span class="item-name">Pesado</span>
             </div>
             <div class="kilo-options">
                 <label>
-                    <input type="radio" name="kilo" value="0" checked> Sin Kilo
+                    <input type="number" id="pesadoMonto" min="0" value="0" step="1">
+                    Pesos
+                    <span class="calculation-result" id="pesadoGramosResultado">0 g</span>
                 </label>
                 <label>
-                    <input type="radio" name="kilo" value="0.25"> 1/4 Kg - $170
-                </label>
-                <label>
-                    <input type="radio" name="kilo" value="0.5"> 1/2 Kg - $340
-                </label>
-                <label>
-                    <input type="radio" name="kilo" value="0.75"> 3/4 Kg - $510
-                </label>
-                <label>
-                    <input type="radio" name="kilo" value="1"> 1 Kg - $680
+                    <input type="number" id="pesadoGramos" min="0" value="0" step="1">
+                    Gramos
+                    <span class="calculation-result" id="pesadoMontoResultado">$0.00</span>
                 </label>
             </div>
         </div>
@@ -354,8 +357,8 @@
             const tortillaKilo = parseInt(document.getElementById('tortillaKilo').value) || 0;
             const tortillaMedio = parseInt(document.getElementById('tortillaMedio').value) || 0;
             const tortillaPesos = parseFloat(document.getElementById('tortillaPesos').value) || 0;
-            const kiloRadio = document.querySelector('input[name="kilo"]:checked').value;
-            const kilo = parseFloat(kiloRadio);
+            const pesadoMonto = parseFloat(document.getElementById('pesadoMonto').value) || 0;
+            const pesadoGramos = parseFloat(document.getElementById('pesadoGramos').value) || 0;
             const paraLlevar = document.getElementById('paraLlevar').checked;
 
             // Calcular precios
@@ -367,10 +370,12 @@
             let totalTortillas = (tortillaKilo * 25) + (tortillaMedio * 13) + tortillaPesos;
             let totalPata = pata * precio30;
             let totalRefresco = refresco * precio30;
-            let totalKilo = kilo * precioKiloBase;
+            let gramosPorMonto = (pesadoMonto / precioKiloBase) * 1000;
+            let totalPesadoGramos = (pesadoGramos / 1000) * precioKiloBase;
+            let totalPesado = pesadoMonto + totalPesadoGramos;
 
             // Subtotal
-            let subtotal = totalTacos + totalConsome + totalTortillas + totalPata + totalRefresco + totalKilo;
+            let subtotal = totalTacos + totalConsome + totalTortillas + totalPata + totalRefresco + totalPesado;
 
             // Para llevar
             let costoPaLlevar = 0;
@@ -383,6 +388,8 @@
             let totalTarjeta = Math.ceil(total * 1.03);
 
             // Mostrar resultados
+            document.getElementById('pesadoGramosResultado').textContent = Math.ceil(gramosPorMonto) + ' g';
+            document.getElementById('pesadoMontoResultado').textContent = formatearMoneda(totalPesadoGramos);
             document.getElementById('total').textContent = formatearMoneda(total);
             document.getElementById('totalTarjeta').textContent = totalTarjeta;
         }
@@ -404,7 +411,10 @@
             document.getElementById('tortillaKilo').value = 0;
             document.getElementById('tortillaMedio').value = 0;
             document.getElementById('tortillaPesos').value = 0;
-            document.querySelector('input[name="kilo"][value="0"]').checked = true;
+            document.getElementById('pesadoMonto').value = 0;
+            document.getElementById('pesadoGramos').value = 0;
+            document.getElementById('pesadoGramosResultado').textContent = '0 g';
+            document.getElementById('pesadoMontoResultado').textContent = '$0.00';
             document.getElementById('paraLlevar').checked = false;
             document.getElementById('total').textContent = '$0.00';
             document.getElementById('totalTarjeta').textContent = '0';
@@ -420,9 +430,8 @@
         document.getElementById('tortillaKilo').addEventListener('input', calcularCuenta);
         document.getElementById('tortillaMedio').addEventListener('input', calcularCuenta);
         document.getElementById('tortillaPesos').addEventListener('input', calcularCuenta);
-        document.querySelectorAll('input[name="kilo"]').forEach(radio => {
-            radio.addEventListener('change', calcularCuenta);
-        });
+        document.getElementById('pesadoMonto').addEventListener('input', calcularCuenta);
+        document.getElementById('pesadoGramos').addEventListener('input', calcularCuenta);
         document.getElementById('paraLlevar').addEventListener('change', calcularCuenta);
     </script>
 </body>
