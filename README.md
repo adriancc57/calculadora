@@ -4,7 +4,7 @@ Calculadora sencilla en HTML para sumar cuentas de un puesto de comida.
 
 ## Uso
 
-Abre `calculadora_comida.html` en el navegador y captura las cantidades de cada producto. El total se actualiza con los valores ingresados y muestra una cantidad adicional discreta para pagos con tarjeta.
+Abre `index.html` en el navegador y captura las cantidades de cada producto. El total se actualiza con los valores ingresados y muestra una cantidad adicional discreta para pagos con tarjeta.
 
 ## Funciones
 
