@@ -11,6 +11,6 @@ Abre `index.html` en el navegador y captura las cantidades de cada producto. El 
 - Tacos, pata y refresco.
 - Consomés por chico, medio y litro.
 - Tortillas por kilo, medio kilo o monto directo en pesos.
-- Pesado por monto en pesos o por gramos.
+- Pesado por fracciones de kilo, monto en pesos o gramos.
 - Cargo opcional para llevar.
 - Total principal y monto con 3% para tarjeta redondeado hacia arriba.

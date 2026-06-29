@@ -309,6 +309,21 @@
             </div>
             <div class="kilo-options">
                 <label>
+                    <input type="radio" name="pesadoKilo" value="0" checked> Sin pesado
+                </label>
+                <label>
+                    <input type="radio" name="pesadoKilo" value="0.25"> 1/4 Kg - $170
+                </label>
+                <label>
+                    <input type="radio" name="pesadoKilo" value="0.5"> 1/2 Kg - $340
+                </label>
+                <label>
+                    <input type="radio" name="pesadoKilo" value="0.75"> 3/4 Kg - $510
+                </label>
+                <label>
+                    <input type="radio" name="pesadoKilo" value="1"> 1 Kg - $680
+                </label>
+                <label>
                     <input type="number" id="pesadoMonto" min="0" value="0" step="1">
                     Pesos
                     <span class="calculation-result" id="pesadoGramosResultado">0 g</span>
@@ -359,6 +374,7 @@
             const tortillaPesos = parseFloat(document.getElementById('tortillaPesos').value) || 0;
             const pesadoMonto = parseFloat(document.getElementById('pesadoMonto').value) || 0;
             const pesadoGramos = parseFloat(document.getElementById('pesadoGramos').value) || 0;
+            const pesadoKilo = parseFloat(document.querySelector('input[name="pesadoKilo"]:checked').value);
             const paraLlevar = document.getElementById('paraLlevar').checked;
 
             // Calcular precios
@@ -372,7 +388,8 @@
             let totalRefresco = refresco * precio30;
             let gramosPorMonto = (pesadoMonto / precioKiloBase) * 1000;
             let totalPesadoGramos = (pesadoGramos / 1000) * precioKiloBase;
-            let totalPesado = pesadoMonto + totalPesadoGramos;
+            let totalPesadoKilo = pesadoKilo * precioKiloBase;
+            let totalPesado = totalPesadoKilo + pesadoMonto + totalPesadoGramos;
 
             // Subtotal
             let subtotal = totalTacos + totalConsome + totalTortillas + totalPata + totalRefresco + totalPesado;
@@ -411,6 +428,7 @@
             document.getElementById('tortillaKilo').value = 0;
             document.getElementById('tortillaMedio').value = 0;
             document.getElementById('tortillaPesos').value = 0;
+            document.querySelector('input[name="pesadoKilo"][value="0"]').checked = true;
             document.getElementById('pesadoMonto').value = 0;
             document.getElementById('pesadoGramos').value = 0;
             document.getElementById('pesadoGramosResultado').textContent = '0 g';
@@ -430,6 +448,9 @@
         document.getElementById('tortillaKilo').addEventListener('input', calcularCuenta);
         document.getElementById('tortillaMedio').addEventListener('input', calcularCuenta);
         document.getElementById('tortillaPesos').addEventListener('input', calcularCuenta);
+        document.querySelectorAll('input[name="pesadoKilo"]').forEach(radio => {
+            radio.addEventListener('change', calcularCuenta);
+        });
         document.getElementById('pesadoMonto').addEventListener('input', calcularCuenta);
         document.getElementById('pesadoGramos').addEventListener('input', calcularCuenta);
         document.getElementById('paraLlevar').addEventListener('change', calcularCuenta);
