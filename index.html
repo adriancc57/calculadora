@@ -234,7 +234,7 @@
             </div>
             <div class="input-group">
                 <!--label for="tacos">Cantidad:</label -->
-                <input type="number" id="tacos" min="0" value="0" step="1">
+                <input type="number" id="tacos" min="0" step="1">
             </div>
         </div>
 
@@ -245,15 +245,15 @@
             </div>
             <div class="kilo-options">
                 <label>
-                    <input type="number" id="consomeChico" min="0" value="0" step="1">
+                    <input type="number" id="consomeChico" min="0" step="1">
                     Normal - $30
                 </label>
                 <label>
-                    <input type="number" id="consomeMedio" min="0" value="0" step="1">
+                    <input type="number" id="consomeMedio" min="0" step="1">
                     Medio - $20
                 </label>
                 <label>
-                    <input type="number" id="consomeLitro" min="0" value="0" step="1">
+                    <input type="number" id="consomeLitro" min="0" step="1">
                     Litro - $60
                 </label>
             </div>
@@ -266,15 +266,15 @@
             </div>
             <div class="kilo-options">
                 <label>
-                    <input type="number" id="tortillaKilo" min="0" value="0" step="1">
+                    <input type="number" id="tortillaKilo" min="0" step="1">
                     Kilo - $25
                 </label>
                 <label>
-                    <input type="number" id="tortillaMedio" min="0" value="0" step="1">
+                    <input type="number" id="tortillaMedio" min="0" step="1">
                     Medio - $13
                 </label>
                 <label>
-                    <input type="number" id="tortillaPesos" min="0" value="0" step="1">
+                    <input type="number" id="tortillaPesos" min="0" step="1">
                     Pesos
                 </label>
             </div>
@@ -286,8 +286,8 @@
                 <span class="item-name">Pata</span>
             </div>
             <div class="input-group">
-                <label for="pata">Cantidad:</label>
-                <input type="number" id="pata" min="0" value="0" step="1">
+               
+                <input type="number" id="pata" min="0" step="1">
             </div>
         </div>
 
@@ -297,8 +297,25 @@
                 <span class="item-name">Refresco</span>
             </div>
             <div class="input-group">
-                <label for="refresco">Cantidad:</label>
-                <input type="number" id="refresco" min="0" value="0" step="1">
+                
+                <input type="number" id="refresco" min="0" step="1">
+            </div>
+        </div>
+
+        <!-- Pulque -->
+        <div class="menu-item">
+            <div class="item-header">
+                <span class="item-name">Pulque</span>
+            </div>
+            <div class="kilo-options">
+                <label>
+                    <input type="number" id="pulqueMedio" min="0" step="1">
+                    Medios - $25
+                </label>
+                <label>
+                    <input type="number" id="pulqueLitro" min="0" step="1">
+                    Litros - $45
+                </label>
             </div>
         </div>
 
@@ -324,15 +341,25 @@
                     <input type="radio" name="pesadoKilo" value="1"> 1 Kg - $680
                 </label>
                 <label>
-                    <input type="number" id="pesadoMonto" min="0" value="0" step="1">
+                    <input type="number" id="pesadoMonto" min="0" step="1">
                     Pesos
                     <span class="calculation-result" id="pesadoGramosResultado">0 g</span>
                 </label>
                 <label>
-                    <input type="number" id="pesadoGramos" min="0" value="0" step="1">
+                    <input type="number" id="pesadoGramos" min="0" step="1">
                     Gramos
                     <span class="calculation-result" id="pesadoMontoResultado">$0.00</span>
                 </label>
+            </div>
+        </div>
+
+        <!-- Cantidad extra -->
+        <div class="menu-item">
+            <div class="item-header">
+                <span class="item-name">Cantidad extra</span>
+            </div>
+            <div class="input-group">
+                <input type="number" id="cantidadExtra" min="0" step="1">
             </div>
         </div>
 
@@ -361,19 +388,32 @@
     </div>
 
     <script>
+        function obtenerNumero(id) {
+            const valor = parseFloat(document.getElementById(id).value);
+            return Number.isFinite(valor) ? valor : 0;
+        }
+
+        function obtenerEntero(id) {
+            const valor = parseInt(document.getElementById(id).value, 10);
+            return Number.isFinite(valor) ? valor : 0;
+        }
+
         function calcularCuenta() {
             // Obtener valores
-            const tacos = parseInt(document.getElementById('tacos').value) || 0;
-            const pata = parseInt(document.getElementById('pata').value) || 0;
-            const refresco = parseInt(document.getElementById('refresco').value) || 0;
-            const consomeChico = parseInt(document.getElementById('consomeChico').value) || 0;
-            const consomeMedio = parseInt(document.getElementById('consomeMedio').value) || 0;
-            const consomeLitro = parseInt(document.getElementById('consomeLitro').value) || 0;
-            const tortillaKilo = parseInt(document.getElementById('tortillaKilo').value) || 0;
-            const tortillaMedio = parseInt(document.getElementById('tortillaMedio').value) || 0;
-            const tortillaPesos = parseFloat(document.getElementById('tortillaPesos').value) || 0;
-            const pesadoMonto = parseFloat(document.getElementById('pesadoMonto').value) || 0;
-            const pesadoGramos = parseFloat(document.getElementById('pesadoGramos').value) || 0;
+            const tacos = obtenerEntero('tacos');
+            const pata = obtenerEntero('pata');
+            const refresco = obtenerEntero('refresco');
+            const pulqueMedio = obtenerEntero('pulqueMedio');
+            const pulqueLitro = obtenerEntero('pulqueLitro');
+            const consomeChico = obtenerEntero('consomeChico');
+            const consomeMedio = obtenerEntero('consomeMedio');
+            const consomeLitro = obtenerEntero('consomeLitro');
+            const tortillaKilo = obtenerEntero('tortillaKilo');
+            const tortillaMedio = obtenerEntero('tortillaMedio');
+            const tortillaPesos = obtenerNumero('tortillaPesos');
+            const pesadoMonto = obtenerNumero('pesadoMonto');
+            const pesadoGramos = obtenerNumero('pesadoGramos');
+            const cantidadExtra = obtenerNumero('cantidadExtra');
             const pesadoKilo = parseFloat(document.querySelector('input[name="pesadoKilo"]:checked').value);
             const paraLlevar = document.getElementById('paraLlevar').checked;
 
@@ -386,13 +426,14 @@
             let totalTortillas = (tortillaKilo * 25) + (tortillaMedio * 13) + tortillaPesos;
             let totalPata = pata * precio30;
             let totalRefresco = refresco * precio30;
+            let totalPulque = (pulqueMedio * 25) + (pulqueLitro * 45);
             let gramosPorMonto = (pesadoMonto / precioKiloBase) * 1000;
             let totalPesadoGramos = (pesadoGramos / 1000) * precioKiloBase;
             let totalPesadoKilo = pesadoKilo * precioKiloBase;
             let totalPesado = totalPesadoKilo + pesadoMonto + totalPesadoGramos;
 
             // Subtotal
-            let subtotal = totalTacos + totalConsome + totalTortillas + totalPata + totalRefresco + totalPesado;
+            let subtotal = totalTacos + totalConsome + totalTortillas + totalPata + totalRefresco + totalPulque + totalPesado + cantidadExtra;
 
             // Para llevar
             let costoPaLlevar = 0;
@@ -419,18 +460,21 @@
         }
 
         function limpiar() {
-            document.getElementById('tacos').value = 0;
-            document.getElementById('pata').value = 0;
-            document.getElementById('refresco').value = 0;
-            document.getElementById('consomeChico').value = 0;
-            document.getElementById('consomeMedio').value = 0;
-            document.getElementById('consomeLitro').value = 0;
-            document.getElementById('tortillaKilo').value = 0;
-            document.getElementById('tortillaMedio').value = 0;
-            document.getElementById('tortillaPesos').value = 0;
+            document.getElementById('tacos').value = '';
+            document.getElementById('pata').value = '';
+            document.getElementById('refresco').value = '';
+            document.getElementById('pulqueMedio').value = '';
+            document.getElementById('pulqueLitro').value = '';
+            document.getElementById('consomeChico').value = '';
+            document.getElementById('consomeMedio').value = '';
+            document.getElementById('consomeLitro').value = '';
+            document.getElementById('tortillaKilo').value = '';
+            document.getElementById('tortillaMedio').value = '';
+            document.getElementById('tortillaPesos').value = '';
             document.querySelector('input[name="pesadoKilo"][value="0"]').checked = true;
-            document.getElementById('pesadoMonto').value = 0;
-            document.getElementById('pesadoGramos').value = 0;
+            document.getElementById('pesadoMonto').value = '';
+            document.getElementById('pesadoGramos').value = '';
+            document.getElementById('cantidadExtra').value = '';
             document.getElementById('pesadoGramosResultado').textContent = '0 g';
             document.getElementById('pesadoMontoResultado').textContent = '$0.00';
             document.getElementById('paraLlevar').checked = false;
@@ -442,6 +486,8 @@
         document.getElementById('tacos').addEventListener('change', calcularCuenta);
         document.getElementById('pata').addEventListener('change', calcularCuenta);
         document.getElementById('refresco').addEventListener('change', calcularCuenta);
+        document.getElementById('pulqueMedio').addEventListener('input', calcularCuenta);
+        document.getElementById('pulqueLitro').addEventListener('input', calcularCuenta);
         document.getElementById('consomeChico').addEventListener('input', calcularCuenta);
         document.getElementById('consomeMedio').addEventListener('input', calcularCuenta);
         document.getElementById('consomeLitro').addEventListener('input', calcularCuenta);
@@ -453,6 +499,7 @@
         });
         document.getElementById('pesadoMonto').addEventListener('input', calcularCuenta);
         document.getElementById('pesadoGramos').addEventListener('input', calcularCuenta);
+        document.getElementById('cantidadExtra').addEventListener('input', calcularCuenta);
         document.getElementById('paraLlevar').addEventListener('change', calcularCuenta);
     </script>
 </body>
