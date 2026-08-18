@@ -222,12 +222,74 @@
             background: #D9B77E;
         }
 
+        .floating-summary {
+            position: fixed;
+            top: 16px;
+            right: 16px;
+            z-index: 1000;
+            width: 150px;
+            padding: 30px 16px 16px;
+            background: #FFF9F2;
+            border: 1px solid #E7D9CC;
+            border-left: 4px solid #C9826E;
+            border-radius: 8px;
+            box-shadow: 0 8px 24px rgba(61, 54, 50, 0.18);
+        }
+
+        .floating-summary-close {
+            position: absolute;
+            top: 4px;
+            right: 4px;
+            width: 32px;
+            height: 32px;
+            padding: 0;
+            border-radius: 50%;
+            background: transparent;
+            color: #9B6555;
+            font-size: 24px;
+            line-height: 1;
+            box-shadow: none;
+        }
+
+        .floating-summary-close:hover {
+            transform: none;
+            background: #FBF5EF;
+            box-shadow: none;
+        }
+
+        .floating-summary-amounts {
+            display: flex;
+            flex-direction: column;
+            align-items: flex-end;
+            gap: 6px;
+            color: #3D3632;
+        }
+
+        .floating-summary-cash {
+            font-size: 22px;
+            font-weight: 700;
+        }
+
+        .floating-summary-card {
+            color: #6F655F;
+            font-size: 17px;
+            font-weight: 600;
+        }
+
         .hidden {
             display: none;
         }
     </style>
 </head>
 <body>
+    <div class="floating-summary hidden" id="floatingSummary">
+        <button class="floating-summary-close" type="button" id="floatingSummaryClose" aria-label="Cerrar resumen">&times;</button>
+        <div class="floating-summary-amounts">
+            <div class="floating-summary-cash" id="floatingTotal">$0.00</div>
+            <div class="floating-summary-card" id="floatingTotalTarjeta">$0</div>
+        </div>
+    </div>
+
     <div class="container">
         <h1>Calculadora de cuenta</h1>
 
@@ -402,6 +464,19 @@
             return Number.isFinite(valor) ? valor : 0;
         }
 
+        function mostrarResumenFlotante() {
+            document.getElementById('floatingSummary').classList.remove('hidden');
+        }
+
+        function ocultarResumenFlotante() {
+            document.getElementById('floatingSummary').classList.add('hidden');
+        }
+
+        function actualizarResumenFlotante(total, totalTarjeta) {
+            document.getElementById('floatingTotal').textContent = formatearMoneda(total);
+            document.getElementById('floatingTotalTarjeta').textContent = '$' + totalTarjeta;
+        }
+
         function calcularCuenta() {
             // Obtener valores
             const tacos = obtenerEntero('tacos');
@@ -454,6 +529,8 @@
             document.getElementById('pesadoMontoResultado').textContent = formatearMoneda(totalPesadoGramos);
             document.getElementById('total').textContent = formatearMoneda(total);
             document.getElementById('totalTarjeta').textContent = totalTarjeta;
+            actualizarResumenFlotante(total, totalTarjeta);
+            mostrarResumenFlotante();
         }
 
         function formatearMoneda(cantidad) {
@@ -484,9 +561,18 @@
             document.getElementById('paraLlevar').checked = false;
             document.getElementById('total').textContent = '$0.00';
             document.getElementById('totalTarjeta').textContent = '0';
+            actualizarResumenFlotante(0, 0);
         }
 
+        document.getElementById('floatingSummaryClose').addEventListener('click', function() {
+            limpiar();
+            ocultarResumenFlotante();
+        });
+
         // Calcular automáticamente cuando cambien los valores
+        document.getElementById('tacos').addEventListener('input', calcularCuenta);
+        document.getElementById('pata').addEventListener('input', calcularCuenta);
+        document.getElementById('refresco').addEventListener('input', calcularCuenta);
         document.getElementById('tacos').addEventListener('change', calcularCuenta);
         document.getElementById('pata').addEventListener('change', calcularCuenta);
         document.getElementById('refresco').addEventListener('change', calcularCuenta);
