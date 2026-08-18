@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Calculadora de Cuenta - Puesto de Comida</title>
+    <title>Barbacoa Contreras</title>
     <style>
         * {
             margin: 0;
@@ -13,7 +13,7 @@
 
         body {
             font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #eca792 0%, #C9826E 100%);
             min-height: 100vh;
             display: flex;
             justify-content: center;
@@ -22,9 +22,9 @@
         }
 
         .container {
-            background: white;
+            background: #FFF9F2;
             border-radius: 15px;
-            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.3);
+            box-shadow: 0 10px 40px rgba(61, 54, 50, 0.24);
             max-width: 500px;
             width: 100%;
             padding: 30px;
@@ -32,17 +32,17 @@
 
         h1 {
             text-align: center;
-            color: #333;
+            color: #3D3632;
             margin-bottom: 30px;
             font-size: 24px;
         }
 
         .menu-item {
-            background: #f8f9fa;
+            background: #FBF5EF;
             padding: 15px;
             margin-bottom: 15px;
             border-radius: 8px;
-            border-left: 4px solid #667eea;
+            border-left: 4px solid #C9826E;
         }
 
         .item-header {
@@ -54,12 +54,12 @@
 
         .item-name {
             font-weight: 600;
-            color: #333;
+            color: #3D3632;
             font-size: 16px;
         }
 
         .item-price {
-            color: #667eea;
+            color: #C9826E;
             font-weight: bold;
             font-size: 16px;
         }
@@ -71,7 +71,7 @@
         }
 
         label {
-            color: #666;
+            color: #6F655F;
             font-size: 14px;
             min-width: 80px;
         }
@@ -79,8 +79,10 @@
         input[type="number"],
         select {
             padding: 8px 10px;
-            border: 1px solid #ddd;
+            background: #FFF9F2;
+            border: 1px solid #E7D9CC;
             border-radius: 5px;
+            color: #3D3632;
             font-size: 14px;
             width: 100px;
         }
@@ -88,8 +90,8 @@
         input[type="number"]:focus,
         select:focus {
             outline: none;
-            border-color: #667eea;
-            box-shadow: 0 0 5px rgba(102, 126, 234, 0.3);
+            border-color: #C9826E;
+            box-shadow: 0 0 5px rgba(201, 130, 110, 0.3);
         }
 
         .kilo-options {
@@ -102,11 +104,11 @@
             gap: 8px;
             margin-bottom: 8px;
             cursor: pointer;
-            color: #555;
+            color: #6F655F;
         }
 
         .calculation-result {
-            color: #667eea;
+            color: #C9826E;
             font-size: 13px;
             font-weight: 600;
             min-width: 80px;
@@ -114,21 +116,23 @@
         }
 
         input[type="radio"] {
+            accent-color: #C9826E;
             cursor: pointer;
         }
 
         .checkbox-item {
-            background: #f8f9fa;
+            background: #FBF5EF;
             padding: 15px;
             margin-bottom: 15px;
             border-radius: 8px;
-            border-left: 4px solid #764ba2;
+            border-left: 4px solid #D9B77E;
             display: flex;
             align-items: center;
             gap: 15px;
         }
 
         input[type="checkbox"] {
+            accent-color: #C9826E;
             cursor: pointer;
             width: 20px;
             height: 20px;
@@ -136,18 +140,18 @@
 
         .checkbox-label {
             font-weight: 600;
-            color: #333;
+            color: #3D3632;
             flex: 1;
         }
 
         .separator {
             height: 2px;
-            background: linear-gradient(to right, #667eea, transparent);
+            background: linear-gradient(to right, #D9B77E, transparent);
             margin: 25px 0;
         }
 
         .totales {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ecbaab 0%, #C9826E 100%);
             color: white;
             padding: 20px;
             border-radius: 8px;
@@ -200,22 +204,22 @@
         }
 
         .btn-calcular {
-            background: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            background: linear-gradient(135deg, #ecbaab 0%, #C9826E 100%);
             color: white;
         }
 
         .btn-calcular:hover {
             transform: translateY(-2px);
-            box-shadow: 0 5px 20px rgba(102, 126, 234, 0.4);
+            box-shadow: 0 5px 20px rgba(155, 101, 85, 0.34);
         }
 
         .btn-limpiar {
-            background: #e0e0e0;
-            color: #333;
+            background: #E7D9CC;
+            color: #3D3632;
         }
 
         .btn-limpiar:hover {
-            background: #d0d0d0;
+            background: #D9B77E;
         }
 
         .hidden {
@@ -225,7 +229,7 @@
 </head>
 <body>
     <div class="container">
-        <h1>🍽️ Calculadora de Cuenta</h1>
+        <h1>Calculadora de cuenta</h1>
 
         <!-- Tacos -->
         <div class="menu-item">
